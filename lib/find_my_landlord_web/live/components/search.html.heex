@@ -1,0 +1,44 @@
+<div>
+  <form
+    phx-change="suggest"
+    phx-click-away="hide-suggest"
+    phx-submit="submit"
+    phx-target={@myself}>
+
+    <div class="flex">
+      <input
+        type="text"
+        name="query"
+        class="search-bar"
+        value={ @query }
+        phx-debounce="500"
+        autofocus
+        autocomplete="off"
+        placeholder="Search..."
+        phx-target={@myself} />
+
+      <input
+        type="submit"
+        class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        value="Search"
+        >
+    </div>
+
+    <%= if @suggestions != [] do %>
+    <div class="relative" phx-window-keydown="set-focus" phx-target={@myself}>
+      <div class="absolute z-50 left-0 right-0 rounded border border-gray-100 shadow py-2 bg-white">
+        <%= for {item, idx} <- Enum.with_index(@suggestions) do %>
+        <% selected = if idx == @item_focus, do: "bg-gray-200" %>
+        <div
+          phx-click="pick"
+          phx-value-item={ item }
+          class={"cursor-pointer p-2 hover:bg-gray-200 focus:bg-gray-200 #{selected}"}
+          phx-target={@myself}>
+          <%= item %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+  </form>
+</div>
