@@ -18,6 +18,7 @@ defmodule FindMyLandlordWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    live "/search", SearchLive, :search
   end
 
   # Other scopes may use custom stacks.

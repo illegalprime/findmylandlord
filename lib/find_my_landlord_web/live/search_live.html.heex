@@ -1,0 +1,16 @@
+
+<h1 class="text-2xl pb-4">Find My Landlord!</h1>
+
+<.live_component
+  module={FindMyLandlordWeb.Live.Components.Search}
+  id="searchbox"
+  suggestions={[]}
+  query=""
+  pick={nil}
+  item_focus={nil}
+  />
+
+<br/>
+<%= if @pick != nil do %>
+  <h2>You picked: <b><%= @pick %></b></h2>
+<% end %>

@@ -42,6 +42,7 @@ npm-debug.log
 # dependencies
 /.mix/
 /.direnv.d/
+/.direnv/
 
 /ops/localstate.*
 /ops/secrets/
