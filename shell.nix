@@ -9,6 +9,8 @@ mkShell {
   buildInputs = with pkgs; [
     elixir_1_14
     postgresql_15
+    nodejs-16_x
+    yarn
     git
   ]
   # For file_system on Linux.
@@ -28,6 +30,6 @@ mkShell {
   shellHook = ''
     export PATH="''${PATH}:${pwd}/scripts"
     export NODE_PATH="''${NODE_PATH}:${pwd}/deps"
-    export NODE_PATH="''${NODE_PATH}:${import ./pkg/node-modules.nix}"
+    export NODE_PATH="''${NODE_PATH}:${pkgs.callPackage ./pkg/node-modules.nix {}}"
   '';
 }

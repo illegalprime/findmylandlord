@@ -17,6 +17,7 @@ let
     inherit src name mixEnv;
     sha256 = mixSha256;
   };
+  node_modules = callPackage ./node-modules.nix {};
 in stdenv.mkDerivation (args // {
   dontStrip = true;
 
@@ -48,7 +49,7 @@ in stdenv.mkDerivation (args // {
     export XDG_CACHE_HOME="$TMPDIR"
     export ESBUILD_BIN=${esbuild}/bin/esbuild
     export TAILWIND_BIN=${nodePackages.tailwindcss}/bin/tailwind
-    export NODE_PATH="''${NODE_PATH}:${import ./node-modules.nix}"
+    export NODE_PATH="''${NODE_PATH}:${node_modules}"
 
     $setRebar
 
