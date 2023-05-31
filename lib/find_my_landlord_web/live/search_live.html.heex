@@ -5,12 +5,10 @@
   module={FindMyLandlordWeb.Live.Components.Search}
   id="searchbox"
   suggestions={[]}
-  query=""
-  pick={nil}
-  item_focus={nil}
+  query={@query}
   />
 
 <br/>
-<%= if @pick != nil do %>
-  <h2>You picked: <b><%= @pick %></b></h2>
+<%= if @query != nil do %>
+  <h2>You picked: <b><%= @query %></b></h2>
 <% end %>

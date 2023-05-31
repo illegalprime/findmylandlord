@@ -1,9 +1,10 @@
 <div>
   <form
     phx-change="suggest"
-    phx-click-away="hide-suggest"
     phx-submit="submit"
-    phx-target={@myself}>
+    phx-target={@myself}
+    x-data="{ open: false }"
+    >
 
     <div class="flex">
       <input
@@ -12,10 +13,13 @@
         class="search-bar"
         value={ @query }
         phx-debounce="500"
-        autofocus
         autocomplete="off"
+        tabindex="0"
         placeholder="Search..."
-        phx-target={@myself} />
+        phx-target={@myself}
+        x-init="$el.focus()"
+        x-on:keydown="open = true"
+        />
 
       <input
         type="submit"
@@ -24,21 +28,28 @@
         >
     </div>
 
-    <%= if @suggestions != [] do %>
-    <div class="relative" phx-window-keydown="set-focus" phx-target={@myself}>
+    <div class="relative mt-2" x-show="open" @click.outside="open = false">
       <div class="absolute z-50 left-0 right-0 rounded border border-gray-100 shadow py-2 bg-white">
-        <%= for {item, idx} <- Enum.with_index(@suggestions) do %>
-        <% selected = if idx == @item_focus, do: "bg-gray-200" %>
+        <%= if Enum.empty?(@suggestions) do %>
+        <div class="p-2">
+          <%= if is_nil(@query) or String.length(@query) == 0 do %>
+          <i>... starting typing to see search results</i>
+          <% else %>
+          <i>... no results found</i>
+          <% end %>
+        </div>
+        <% else %>
+        <%= for item <- @suggestions do %>
         <div
-          phx-click="pick"
-          phx-value-item={ item }
-          class={"cursor-pointer p-2 hover:bg-gray-200 focus:bg-gray-200 #{selected}"}
+          class="cursor-pointer p-2 hover:bg-gray-200 focus:bg-gray-200"
+          phx-click="submit"
+          phx-value-query={item}
           phx-target={@myself}>
           <%= item %>
         </div>
         <% end %>
+        <% end %>
       </div>
     </div>
-    <% end %>
   </form>
 </div>

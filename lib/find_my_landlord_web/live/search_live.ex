@@ -3,13 +3,13 @@ defmodule FindMyLandlordWeb.SearchLive do
 
   def mount(_params, _session, socket) do
     socket
-    |> assign(pick: nil)
+    |> assign(query: nil)
     |> ok()
   end
 
   def handle_params(%{"s" => query},  _, socket) do
     socket
-    |> assign(pick: query)
+    |> assign(query: query)
     |> noreply()
   end
   def handle_params(_,  _, socket), do: noreply(socket)
